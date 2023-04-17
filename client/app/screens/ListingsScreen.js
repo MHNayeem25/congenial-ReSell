@@ -33,7 +33,9 @@ function ListingsScreen({ navigation }) {
   } = useApi(getListings);
 
   useEffect(() => {
+    console.log("Hii");
     loadListings();
+    console.log(listings);
   }, []);
   return (
     <Screen style={styles.screen}>
@@ -45,7 +47,7 @@ function ListingsScreen({ navigation }) {
           <Card
             title={item.title}
             subTitle={"$" + item.price}
-            image={item.image}
+            imageUrl={item.image[0].url}
             onPress={() => navigation.navigate(routes.LISTING_DETAILS, item)}
           />
         )}
