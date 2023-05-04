@@ -8,16 +8,32 @@ const mongoose = require("mongoose");
 //   }
 
 const listSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+  },
   title: {
     type: String,
   },
   price: {
     type: Number,
   },
-  image: {
-    imageUri: { type: String },
-    imageId: { type: String },
+  category: {
+    type: String,
   },
+  description: {
+    type: String,
+  },
+  location: {
+    latitude: { type: Number },
+    longitude: { type: Number },
+  },
+  image: [
+    {
+      imageUri: { type: String, default: "null" },
+      imageId: { type: String, default: "null" },
+      thumbnailUrl: { type: String, default: "null" },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Listing", listSchema);

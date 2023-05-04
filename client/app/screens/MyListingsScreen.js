@@ -10,7 +10,7 @@ import useApi from "../hooks/useApi";
 import { getListings } from "../api/listings";
 import useAuth from "../auth/useAuth";
 
-function ListingsScreen({ navigation }) {
+function MyListingsScreen({ navigation }) {
   const { user } = useAuth();
   const {
     data: listings,
@@ -20,8 +20,7 @@ function ListingsScreen({ navigation }) {
   } = useApi(getListings);
 
   useEffect(() => {
-    loadListings();
-    // loadListings(user.userId);
+    loadListings(user.userId);
   }, []);
   return (
     <>
@@ -38,7 +37,7 @@ function ListingsScreen({ navigation }) {
               onPress={() =>
                 navigation.navigate(routes.LISTING_DETAILS, {
                   listing: item,
-                  user: false,
+                  user: true,
                 })
               }
               thumbnailUrl={item.image[0].thumbnailUrl}
@@ -57,4 +56,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListingsScreen;
+export default MyListingsScreen;
