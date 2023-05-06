@@ -16,13 +16,15 @@ const UploadScreen = ({ onDone, progress = 0, visible = false }) => {
             width={200}
           />
         ) : (
-          <LottieView
-            onAnimationFinish={onDone}
-            autoPlay
-            loop={false}
-            style={styles.animation}
-            source={require("../assets/animations/done.json")}
-          />
+          <View style={styles.animationContainer}>
+            <LottieView
+              onAnimationFinish={onDone}
+              autoPlay
+              loop={false}
+              style={styles.animation}
+              source={require("../assets/animations/done.json")}
+            />
+          </View>
         )}
       </View>
     </Modal>
@@ -32,8 +34,12 @@ const UploadScreen = ({ onDone, progress = 0, visible = false }) => {
 export default UploadScreen;
 
 const styles = StyleSheet.create({
+  animationContainer: {
+    width: 200,
+  },
   animation: {
     width: 200,
+    resizeMode: "cover",
   },
   container: {
     alignItems: "center",

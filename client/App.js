@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
+
+import axios from "axios";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./app/navigation/AuthNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
@@ -10,6 +12,11 @@ import authStorage from "./app/auth/storage";
 import { navigationRef } from "./app/navigation/rootNavigation";
 
 import * as SplashScreen from "expo-splash-screen";
+
+import { AXIOS_URL } from "@env";
+import settings from "./app/config/settings";
+axios.defaults.baseURL = settings.AXIOS_URL;
+// axios.defaults.baseURL = "http://192.168.16.77:4000/api"; //for emulator
 
 export default function App() {
   const [user, setUser] = useState();

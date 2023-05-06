@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, RefreshControl } from "react-native";
 
 import Card from "../components/Card";
 import colors from "../config/colors";
@@ -15,6 +15,7 @@ function ListingsScreen({ navigation }) {
   const {
     data: listings,
     error,
+    refreshing,
     loading,
     request: loadListings,
   } = useApi(getListings);
@@ -30,6 +31,9 @@ function ListingsScreen({ navigation }) {
         <FlatList
           data={listings}
           keyExtractor={(listing) => listing._id.toString()}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={loadListings} />
+          }
           renderItem={({ item }) => (
             <Card
               title={item.title}

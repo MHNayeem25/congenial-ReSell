@@ -20,6 +20,7 @@ const {
   registerVerification,
   messageVerification,
 } = require("../middleware/validationSchemas");
+const { getSignature } = require("../controller/imageController");
 
 router.route("/listings").get(getListings); //get all listings
 
@@ -38,4 +39,7 @@ router.route("/getMessages").get(getMessages);
 router.route("/delMessage").put(delMessage);
 
 router.route("/getUserById").get(getUserById);
+
+router.route("/getSignature").get(getSignature);
+
 module.exports = router;

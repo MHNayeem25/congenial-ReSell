@@ -15,6 +15,9 @@ import useLocation from "../hooks/useLocation";
 import { addListing } from "../api/listings";
 import UploadScreen from "./UploadScreen";
 import useAuth from "../auth/useAuth";
+import { uploadImage } from "../api/cloudinary";
+import ActivityIndicator from "../components/ActivityIndicator";
+import * as Notifications from "expo-notifications";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -85,6 +88,7 @@ const categories = [
 
 function ListingEditScreen() {
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
   const { user } = useAuth();
   const userId = user.userId;
   //console.log(location);
@@ -93,25 +97,51 @@ function ListingEditScreen() {
   const [progress, setProgress] = useState(0);
 
   const handleSubmit = async (listing, { resetForm }) => {
-    setProgress(0);
-    setUploadVisible(true);
     const { title, price, category: curCat, description, images } = listing;
+    // console.log(images);
     const category = curCat.label;
-    const image = [{ imageUri: images[0] }];
-    const result = await addListing(
-      {
-        userId,
-        title,
-        price,
-        category,
-        description,
-        location,
-        image,
-      },
-      (progress) => setProgress(progress)
+    setLoading(true);
+    const { secure_url, public_id } = await uploadImage(images[0], (progress) =>
+      setProgress(progress)
     );
+    setLoading(false);
+    setUploadVisible(true);
+    setProgress(0);
+    const image = [{ imageUri: secure_url, imageId: public_id }];
+    if (secure_url) {
+      const result = await addListing(
+        {
+          userId,
+          title,
+          price,
+          category,
+          description,
+          location,
+          image,
+        },
+        (progress) => setProgress(progress)
+      );
 
-    if (!result.status === 200) {
+      // console.log(imageResult);
+      if (result.status === 200) {
+        setUploadVisible(false);
+        Notifications.setNotificationHandler({
+          handleNotification: async () => ({
+            shouldShowAlert: true,
+            shouldPlaySound: false,
+            shouldSetBadge: true,
+          }),
+        });
+        Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Congratulations!",
+            body: "Listing Posted.",
+          },
+          trigger: { seconds: 1 },
+        });
+      }
+    } else {
+      resetForm();
       setUploadVisible(false);
       alert("Could not upload");
     }
@@ -119,50 +149,53 @@ function ListingEditScreen() {
   };
 
   return (
-    <Screen style={styles.container}>
-      <UploadScreen
-        onDone={() => setUploadVisible(false)}
-        progress={progress}
-        visible={uploadVisible}
-      />
-      <Form
-        initialValues={{
-          title: "",
-          price: "",
-          description: "",
-          category: null,
-          images: [],
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <FormImagePicker name="images" />
-        <FormField maxLength={255} name="title" placeholder="Title" />
-        <FormField
-          keyboardType="numeric"
-          maxLength={8}
-          name="price"
-          placeholder="Price"
-          width={120}
+    <>
+      <ActivityIndicator visible={loading} />
+      <Screen style={styles.container}>
+        <UploadScreen
+          onDone={() => setUploadVisible(false)}
+          progress={progress}
+          visible={uploadVisible}
         />
-        <Picker
-          items={categories}
-          name="category"
-          numberOfColumns={3}
-          PickerItemComponent={CategoryPickerItem}
-          placeholder="Category"
-          width="50%"
-        />
-        <FormField
-          maxLength={255}
-          multiline
-          name="description"
-          numberOfLines={3}
-          placeholder="Description"
-        />
-        <SubmitButton title="Post" />
-      </Form>
-    </Screen>
+        <Form
+          initialValues={{
+            title: "",
+            price: "",
+            description: "",
+            category: null,
+            images: [],
+          }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <FormImagePicker name="images" />
+          <FormField maxLength={255} name="title" placeholder="Title" />
+          <FormField
+            keyboardType="numeric"
+            maxLength={8}
+            name="price"
+            placeholder="Price"
+            width={120}
+          />
+          <Picker
+            items={categories}
+            name="category"
+            numberOfColumns={3}
+            PickerItemComponent={CategoryPickerItem}
+            placeholder="Category"
+            width="50%"
+          />
+          <FormField
+            maxLength={255}
+            multiline
+            name="description"
+            numberOfLines={3}
+            placeholder="Description"
+          />
+          <SubmitButton title="Post" />
+        </Form>
+      </Screen>
+    </>
   );
 }
 
