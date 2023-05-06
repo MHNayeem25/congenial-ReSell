@@ -4,10 +4,10 @@ const settings = {
     AXIOS_URL: "http://localhost:4000/api",
   },
   staging: {
-    AXIOS_URL: "http://localhost:4000/api",
+    AXIOS_URL: "https://congenial-resell-backend.onrender.com",
   },
   production: {
-    AXIOS_URL: "http://localhost:4000/api",
+    AXIOS_URL: "https://congenial-resell-backend.onrender.com",
   },
 };
 
