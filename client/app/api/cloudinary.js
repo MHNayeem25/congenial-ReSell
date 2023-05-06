@@ -16,7 +16,7 @@ export async function uploadImage(file, onUploadProgress) {
     const form = new FormData();
     form.append("file", newFile);
     const res = await fetch(
-      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload?api_key=${CLOUDINARY_API_KEY}&timestamp=${timestamp}&signature=${signature}`,
+      `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_API_KEY}/image/upload?api_key=${process.env.CLOUDINARY_API_KEY}&timestamp=${timestamp}&signature=${signature}`,
       {
         method: "POST",
         body: form,

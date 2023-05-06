@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "MoshApp",
+    "name": "ReSell",
     "slug": "MoshApp",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,19 +17,23 @@
     "ios": {
       "supportsTablet": true
     },
-    "notification":{
-      "iosDisplayInForeground":true
+    "notification": {
+      "iosDisplayInForeground": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "permissions": ["NOTIFICATIONS"],
-      "useNextNotificationsApi": true
+      "permissions": [
+        "NOTIFICATIONS"
+      ],
+      "useNextNotificationsApi": true,
+      "package": "com.porridge2603.MoshApp"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d3caacf8-1ad8-4cf9-86ac-3e01d901f305"
+      }
     }
   }
 }
