@@ -1,7 +1,7 @@
 import Constants from "expo-constants";
 const settings = {
   dev: {
-    AXIOS_URL: "http://localhost:4000/api",
+    AXIOS_URL: "https://congenial-resell-backend.onrender.com/api",
   },
   staging: {
     AXIOS_URL: "https://congenial-resell-backend.onrender.com/api",
