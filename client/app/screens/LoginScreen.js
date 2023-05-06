@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, Keyboard } from "react-native";
 import * as Yup from "yup";
 
 import Screen from "../components/Screen";
@@ -24,6 +24,7 @@ function LoginScreen(props) {
   const [loading, setLoading] = useState(false);
   const [loginFailed, setLoginFailed] = useState(false);
   const handleSubmit = async ({ email, password }) => {
+    Keyboard.dismiss();
     // console.log("Handle submit");
     setLoading(true);
     const result = await login(email, password);

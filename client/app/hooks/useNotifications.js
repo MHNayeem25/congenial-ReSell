@@ -11,16 +11,6 @@ export default useNotifications = (user, notificationListener) => {
       shouldSetBadge: true,
     }),
   });
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "You've got mail! 📬",
-        body: "Here is the notification body",
-        data: { data: "goes here" },
-      },
-      trigger: { seconds: 1 },
-    });
-  }
 
   const registerForPushNotifications = async (user) => {
     try {
@@ -41,7 +31,7 @@ export default useNotifications = (user, notificationListener) => {
       // const permission = await Notifications.getPermissionsAsync();
       // if (!permission.granted) return;
       const token = await Notifications.getExpoPushTokenAsync({
-        projectId: "b74817d5-3b28-4b11-9e84-b5e2fc1d145b",
+        projectId: "d3caacf8-1ad8-4cf9-86ac-3e01d901f305",
       });
 
       if (Platform.OS === "android") {
@@ -58,20 +48,6 @@ export default useNotifications = (user, notificationListener) => {
     } catch (error) {
       console.log("Error getting a push token", error);
     }
-  };
-
-  const sendPushNotificationHandler = () => {
-    fetch("https://exp.host/--/api/v2/push/send", {
-      method: "POST",
-      header: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        to: "ExponentPushToken[cHgj-5JKL4kgo7HmLKYENv]",
-        title: "This is test",
-        body: "This is a test notification.",
-      }),
-    });
   };
 
   useEffect(() => {

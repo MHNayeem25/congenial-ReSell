@@ -15,7 +15,6 @@ function ListingsScreen({ navigation }) {
   const {
     data: listings,
     error,
-    refreshing,
     loading,
     request: loadListings,
   } = useApi(getListings);
@@ -32,7 +31,7 @@ function ListingsScreen({ navigation }) {
           data={listings}
           keyExtractor={(listing) => listing._id.toString()}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={loadListings} />
+            <RefreshControl refreshing={false} onRefresh={loadListings} />
           }
           renderItem={({ item }) => (
             <Card

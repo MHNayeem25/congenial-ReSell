@@ -43,7 +43,30 @@ exports.sendMessage = async (req, res, next) => {
       const { token: expoPushToken } = targetUser;
 
       if (Expo.isExpoPushToken(expoPushToken)) {
-        await sendPushNotification(expoPushToken, message);
+        let notif = [];
+        notif.push({
+          to: expoPushToken,
+          sound: "default",
+          title: "Message Recieved",
+          body: message,
+          data: { _displayInForeground: true },
+        });
+        let chunks = expo.chunkPushNotifications(notif);
+        let tickets = [];
+        (async () => {
+          for (let chunk of chunks) {
+            try {
+              let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
+              console.log(ticketChunk);
+              tickets.push(...ticketChunk);
+              console.log(tickets);
+            } catch (error) {
+              console.error(error);
+            }
+          }
+        })();
+
+        // await sendPushNotification(expoPushToken, message);
         res.status(201).send({ Message: "Successfully notified", newMessage });
       }
     }

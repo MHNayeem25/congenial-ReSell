@@ -124,7 +124,6 @@ function ListingEditScreen() {
 
       // console.log(imageResult);
       if (result.status === 200) {
-        setUploadVisible(false);
         Notifications.setNotificationHandler({
           handleNotification: async () => ({
             shouldShowAlert: true,
@@ -146,6 +145,7 @@ function ListingEditScreen() {
       alert("Could not upload");
     }
     resetForm();
+    setUploadVisible(false);
   };
 
   return (

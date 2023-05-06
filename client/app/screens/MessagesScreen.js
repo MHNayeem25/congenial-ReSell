@@ -13,18 +13,22 @@ import {
 import useAuth from "../auth/useAuth";
 
 import messagesApi from "../api/messages";
+import ActivityIndicator from "../components/ActivityIndicator";
 
 function MessagesScreen(props) {
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const recieveMessages = async (userId) => {
     const response = await messagesApi.getMessages(userId);
     setMessages(response.data);
+    setLoading(false);
     return response.data;
   };
   useEffect(() => {
+    setLoading(true);
     recieveMessages(user.userId);
   }, []);
 
@@ -37,36 +41,39 @@ function MessagesScreen(props) {
   };
 
   return (
-    <Screen>
-      {messages.length === 0 ? (
-        <View style={styles.empty}>
-          <Text>No Messages!</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={messages}
-          keyExtractor={(message) => message._id.toString()}
-          renderItem={({ item }) => (
-            <GestureHandlerRootView>
-              <ListItem
-                title={"Title"}
-                subTitle={item.content}
-                image={require("../assets/mosh.jpg")}
-                onPress={() => console.log("Message selected", item)}
-                renderRightActions={() => (
-                  <ListItemDeleteAction onPress={() => handleDelete(item)} />
-                )}
-              />
-            </GestureHandlerRootView>
-          )}
-          ItemSeparatorComponent={ListItemSeparator}
-          refreshing={refreshing}
-          onRefresh={() => {
-            recieveMessages(user.userId);
-          }}
-        />
-      )}
-    </Screen>
+    <>
+      <ActivityIndicator visible={loading} />
+      <Screen>
+        {messages.length === 0 && !loading ? (
+          <View style={styles.empty}>
+            <Text>No Messages!</Text>
+          </View>
+        ) : (
+          <FlatList
+            data={messages}
+            keyExtractor={(message) => message._id.toString()}
+            renderItem={({ item }) => (
+              <GestureHandlerRootView>
+                <ListItem
+                  title={"Title"}
+                  subTitle={item.content}
+                  image={require("../assets/mosh.jpg")}
+                  onPress={() => console.log("Message selected", item)}
+                  renderRightActions={() => (
+                    <ListItemDeleteAction onPress={() => handleDelete(item)} />
+                  )}
+                />
+              </GestureHandlerRootView>
+            )}
+            ItemSeparatorComponent={ListItemSeparator}
+            refreshing={refreshing}
+            onRefresh={() => {
+              recieveMessages(user.userId);
+            }}
+          />
+        )}
+      </Screen>
+    </>
   );
 }
 

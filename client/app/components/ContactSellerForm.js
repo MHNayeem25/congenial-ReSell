@@ -12,10 +12,7 @@ function ContactSellerForm({ listing }) {
   // console.log(user);
   const handleSubmit = async ({ message }, { resetForm }) => {
     Keyboard.dismiss();
-    // console.log(listing.userId);
-    //listing._id is the listing id
-    //listing.userId is the recievers id: to which message is sent
-    // console.log(listing);
+
     const result = await messagesApi.sendMessage(
       message,
       listing._id,
