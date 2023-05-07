@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "438877364352",
+    "project_id": "re-sell-58233",
+    "storage_bucket": "re-sell-58233.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438877364352:android:847a6f2272fa6d66554665",
+        "android_client_info": {
+          "package_name": "com.porridge2603.MoshApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438877364352-07cki710d4lr6ru0sf9b7tvm77jis024.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXCJy73vBuatnz0o6kL-6d5Sqcg-2eWEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438877364352-07cki710d4lr6ru0sf9b7tvm77jis024.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
