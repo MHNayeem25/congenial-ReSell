@@ -25,7 +25,8 @@
         "NOTIFICATIONS"
       ],
       "useNextNotificationsApi": true,
-      "package": "com.porridge2603.MoshApp"
+      "package": "com.porridge2603.MoshApp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/icon.png"
@@ -33,6 +34,9 @@
     "extra": {
       "eas": {
         "projectId": "d3caacf8-1ad8-4cf9-86ac-3e01d901f305"
+      },
+      "bugsnag":{
+        "apiKey":"6d145812ddfb527f20562b2ace0e2aca"
       }
     },
     "plugins": [

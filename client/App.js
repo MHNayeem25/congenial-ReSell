@@ -1,6 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 
+/**    Bugsnag   */
+import Bugsnag from "@bugsnag/expo";
+Bugsnag.start({
+  enabledBreadcrumbTypes: ["error", "log", "navigation", "request", "user"],
+});
+
+/**              */
+
 import axios from "axios";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./app/navigation/AuthNavigator";

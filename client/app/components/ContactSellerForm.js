@@ -2,6 +2,7 @@ import React from "react";
 import { Alert, Keyboard } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Yup from "yup";
+import Bugsnag from "@bugsnag/expo";
 
 import { Form, FormField, SubmitButton } from "./forms";
 import messagesApi from "../api/messages";
@@ -22,6 +23,9 @@ function ContactSellerForm({ listing }) {
     // console.log(result.status);
     if (result.status !== 201) {
       console.log("Error", result);
+      Bugsnag.notify(
+        new Error("Could not send the message to the seller. Token Error")
+      );
       return Alert.alert("Error", "Could not send the message to the seller.");
     }
 

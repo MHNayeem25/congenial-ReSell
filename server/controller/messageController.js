@@ -43,6 +43,7 @@ exports.sendMessage = async (req, res, next) => {
       const { token: expoPushToken } = targetUser;
 
       if (Expo.isExpoPushToken(expoPushToken)) {
+        let expo = new Expo();
         let notif = [];
         notif.push({
           to: expoPushToken,

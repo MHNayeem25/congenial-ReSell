@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { registerPushToken } from "../api/expoPushTokens";
-
+import Bugsnag from "@bugsnag/expo";
 import * as Notifications from "expo-notifications";
 
 export default useNotifications = (user, notificationListener) => {
@@ -43,9 +43,17 @@ export default useNotifications = (user, notificationListener) => {
         });
       }
 
+      /**     */
+      const metadata = {
+        token,
+      };
+      Bugsnag.leaveBreadcrumb("Token", metadata);
+      /**      */
+
       // console.log(token.data);
       registerPushToken(token.data, user.userId);
     } catch (error) {
+      Bugsnag.notify(error);
       console.log("Error getting a push token", error);
     }
   };
