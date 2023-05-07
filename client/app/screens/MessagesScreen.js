@@ -36,7 +36,7 @@ function MessagesScreen(props) {
     // Delete the message from messages
     const response = await messagesApi.delMessage(message._id);
     if (response.status === 200) {
-      setMessages(messages.filter((m) => m.id !== message.id));
+      setMessages(messages.filter((m) => m._id !== message._id));
     }
   };
 
