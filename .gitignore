@@ -19,3 +19,5 @@ web-build/
 .metro-health-check*
 # client/google-services.json
 # client/app.json
+client/app.json
+client/google-services.json
